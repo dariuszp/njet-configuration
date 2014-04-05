@@ -20,5 +20,11 @@ describe('loader/file', function () {
             obj.should.have.property('what');
             obj.what.should.equal('sparta');
         });
+
+        it('should throw error', function () {
+            (function () {
+                var obj = yamlLoader.load(__dirname + '/yaml/file3.yml');
+            }).should.throw();
+        });
     });
 });
