@@ -7,6 +7,8 @@ function Configuration(rootDir) {
     if (!(this instanceof Configuration)) {
         return new Configuration(rootDir);
     }
+
+
 }
 
 module.exports = {
