@@ -5,7 +5,7 @@ var yamlLoader      = require(__dirname + '/file.js'),
 
 function getYamlName(filename) {
     filename = String(filename);
-    return (filename.length > 4 && filename.substr(-4).toLowerCase() === '.yml') ? filename.substr(-4) : false;
+    return (filename.length > 4 && filename.substr(-4).toLowerCase() === '.yml') ? filename.substr(0, filename.length - 4) : false;
 }
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
 
         for (i = 0; i < files.length; i++) {
             if ((name = getYamlName(files[i])) !== false) {
-                result[name] = yamlLoader.load(path + files[i]);
+                result[name] = yamlLoader.load(path + '/' + files[i]);
             }
         }
 
