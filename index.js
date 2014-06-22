@@ -23,7 +23,11 @@ function Configuration(options) {
     }
 
     var config = {},
-        encoding = 'utf8';
+        encoding = 'utf8',
+        validators = [],
+        schema,
+        isValid = false,
+        wasValidate =  false;
 
     this.expect = options.expect || expect;
 
@@ -53,6 +57,8 @@ function Configuration(options) {
 
     this.set = function (name, value) {
         config[name] = value;
+        isValid = false;
+        wasValidate = false;
         return this;
     };
 
@@ -72,13 +78,85 @@ function Configuration(options) {
 
     this.load = function (path) {
         config = this.getDataFromPath(path);
+        isValid = false;
+        wasValidate = false;
         return this;
     };
 
-    this.merge = function (path) {
+    this.merge = function (path, isNotDeep) {
         var data = this.getDataFromPath(path);
-        extend(config, data);
+        if (isNotDeep) {
+            extend(config, data);
+        } else {
+            extend(true, config, data);
+        }
+        isValid = false;
+        wasValidate = false;
         return this;
+    };
+
+    this.schema = function (schemaConfigObject) {
+        if ((typeof schemaConfigObject) !== 'object') {
+            throw new Error('Schema expect schema object');
+        }
+        schema = this.expect.schema(schemaConfigObject);
+        isValid = false;
+        wasValidate = false;
+        return this;
+    };
+
+    this.clearSchema = function () {
+        schema = undefined;
+    };
+
+    this.getSchema = function () {
+        return schema;
+    };
+
+    this.setValidators = function (validatorsArray) {
+        validators = [];
+        var i;
+        for (i = 0; i < validatorsArray.length; i++) {
+            this.addValidator(validatorsArray[i]);
+        }
+        return this;
+    };
+
+    this.addValidator = function (validator) {
+        if ((typeof validator) !== 'function') {
+            throw new Error('Validator must be a function');
+        }
+        validators.push(validator);
+        isValid = false;
+        wasValidate = false;
+        return this;
+    };
+
+    this.clearValidators = function () {
+        validators = [];
+        isValid = false;
+        wasValidate = false;
+        return this;
+    };
+
+    this.validate = function () {
+        var isValid = true;
+        if (schema) {
+            try {
+                schema.assert(config);
+            } catch (e) {
+                isValid = false;
+                console.error(e.message);
+            }
+        }
+        var i;
+        for (i = 0; i < validators.length; i++) {
+            if (validators[i](config) === false) {
+                isValid = false;
+                break;
+            }
+        }
+        return isValid;
     };
 }
 
