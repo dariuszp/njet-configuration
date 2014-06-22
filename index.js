@@ -120,7 +120,7 @@ function Configuration(options) {
     };
 
 
-    this.createSchema = function () {
+    this.createSchema = function (schemaConfigObject) {
         if ((typeof schemaConfigObject) !== 'object') {
             throw new Error('Schema expect schema object');
         }
