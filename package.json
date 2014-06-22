@@ -1,7 +1,7 @@
 {
   "name": "njet-configuration",
-  "version": "0.1.0",
-  "description": "Configuration handler for njet",
+  "version": "1.0.0",
+  "description": "Configuration handler for nodejs projects",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter=spec"
