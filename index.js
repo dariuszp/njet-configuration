@@ -160,12 +160,12 @@ function Configuration(options) {
 
 
     this.validate = function () {
-        var isValid = true;
+        var configIsValid = true;
         if (schema) {
             try {
                 schema.assert(config);
             } catch (e) {
-                isValid = false;
+                configIsValid = false;
                 if (verbosity > 0) {
                     console.error(e.message);
                 }
@@ -177,9 +177,18 @@ function Configuration(options) {
                 if (verbosity > 0) {
                     console.error(validators[i].toString());
                 }
-                isValid = false;
+                configIsValid = false;
                 break;
             }
+        }
+        isValid = configIsValid;
+        wasValidate = true;
+        return configIsValid;
+    };
+
+    this.isValid = function () {
+        if (!wasValidate) {
+            this.validate();
         }
         return isValid;
     };
