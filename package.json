@@ -23,10 +23,11 @@
   },
   "homepage": "https://github.com/dariuszp/njet-configuration",
   "devDependencies": {
-    "mocha": "^1.*",
-    "should": "^3.*"
+    "mocha": "~1.0",
+    "should": "~3.0"
   },
   "dependencies": {
-    "js-yaml": "^3.*"
+    "cruks-lib-config": "~2.0",
+    "js-yaml": "~3.0"
   }
 }
