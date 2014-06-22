@@ -23,6 +23,7 @@ function Configuration(options) {
     }
 
     var config = {},
+        verbosity = options.verbosity || 0,
         encoding = 'utf8',
         validators = [],
         schema,
@@ -146,12 +147,17 @@ function Configuration(options) {
                 schema.assert(config);
             } catch (e) {
                 isValid = false;
-                console.error(e.message);
+                if (verbosity > 0) {
+                    console.error(e.message);
+                }
             }
         }
         var i;
         for (i = 0; i < validators.length; i++) {
             if (validators[i](config) === false) {
+                if (verbosity > 0) {
+                    console.error(validators[i].toString());
+                }
                 isValid = false;
                 break;
             }
