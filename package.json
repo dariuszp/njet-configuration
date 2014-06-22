@@ -1,0 +1,34 @@
+{
+  "name": "njet-configuration",
+  "version": "0.1.0",
+  "description": "Configuration handler for njet",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter=spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dariuszp/njet-configuration.git"
+  },
+  "keywords": [
+    "njet",
+    "yaml",
+    "yml",
+    "configuration"
+  ],
+  "author": "Półtorak Dariusz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dariuszp/njet-configuration/issues"
+  },
+  "homepage": "https://github.com/dariuszp/njet-configuration",
+  "devDependencies": {
+    "mocha": "~1.0",
+    "should": "~3.0"
+  },
+  "dependencies": {
+    "cruks-lib-config": "~2.0",
+    "js-yaml": "~3.0",
+    "node.extend": "~1.0"
+  }
+}

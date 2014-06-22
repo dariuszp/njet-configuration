@@ -1,0 +1,3 @@
+test:
+  me: &is sparta
+what: *is
