@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Njet-configuration by dariuszp</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Njet-configuration</h1>
+        <h2>Configuration handler for njet</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/dariuszp/njet-configuration/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/dariuszp/njet-configuration/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/dariuszp/njet-configuration" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="njet-configuration" class="anchor" href="#njet-configuration"><span class="octicon octicon-link"></span></a>njet-configuration</h1>
+
+<p>Configuration handler for projects.  Njet configuration is responsible for loading yaml configuration files.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">npm</span> <span class="nx">install</span> <span class="nx">njet</span><span class="o">-</span><span class="nx">configuration</span>
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>First load njet configuration</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="kd">var</span> <span class="nx">njetConfiguration</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'njet-configuration'</span><span class="p">);</span>
+</pre></div>
+
+<p>and create first configuration:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">njetConfiguration</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+</pre></div>
+
+<h2>
+<a name="getting-data" class="anchor" href="#getting-data"><span class="octicon octicon-link"></span></a>Getting data</h2>
+
+<p>To get Your configuration use:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'x'</span><span class="p">);</span> <span class="c1">// to get specific value</span>
+<span class="nx">config</span><span class="p">.</span><span class="nx">getConfiguration</span><span class="p">();</span> <span class="c1">// to get all values as json object</span>
+</pre></div>
+
+<h2>
+<a name="set-values-from-json-objects" class="anchor" href="#set-values-from-json-objects"><span class="octicon octicon-link"></span></a>Set values from json objects</h2>
+
+<p>There are three ways to set configuration values.</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">'x'</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+
+<p>will set "x" to 5. Now when You get Your configuration You will receive:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="p">{</span> <span class="s2">"x"</span><span class="o">:</span> <span class="mi">5</span> <span class="p">}</span>
+</pre></div>
+
+<p>You can also replace whole configuration using load:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">config</span><span class="p">.</span><span class="nx">load</span><span class="p">({</span>
+    <span class="nx">y</span><span class="o">:</span> <span class="mi">6</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>This will replace Your configuration and You will receive:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="p">{</span> <span class="s2">"y"</span><span class="o">:</span> <span class="mi">6</span> <span class="p">}</span>
+</pre></div>
+
+<p>Or You can merge two objects together:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">z</span><span class="o">:</span> <span class="mi">1</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>To get:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="p">{</span> <span class="s2">"y"</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">"z"</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="merging" class="anchor" href="#merging"><span class="octicon octicon-link"></span></a>Merging</h2>
+
+<p>Merge will always do deep copy of the objects. For example:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">config</span><span class="p">.</span><span class="nx">load</span><span class="p">({</span>
+    <span class="nx">x</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nx">y</span><span class="o">:</span> <span class="p">[</span><span class="s2">"a"</span><span class="p">]</span>
+<span class="p">});</span>
+
+<span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+    <span class="nx">y</span><span class="o">:</span> <span class="p">[</span><span class="s2">"b"</span><span class="p">],</span>
+    <span class="nx">z</span><span class="o">:</span> <span class="mi">3</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>Will result:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="p">{</span> <span class="s2">"x"</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"y"</span><span class="o">:</span> <span class="p">[</span><span class="s2">"a"</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">],</span> <span class="s2">"z"</span><span class="o">:</span> <span class="mi">3</span> <span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="validating" class="anchor" href="#validating"><span class="octicon octicon-link"></span></a>Validating</h2>
+
+<p>There are two ways to validate objects. You can add validators:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">config</span><span class="p">.</span><span class="nx">addValidator</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>Or schema:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">config</span><span class="p">.</span><span class="nx">schema</span><span class="p">({</span>
+    <span class="nx">x</span><span class="o">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">expect</span><span class="p">.</span><span class="nx">number</span><span class="p">()</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>To validate configuration, simply use:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">config</span><span class="p">.</span><span class="nx">validate</span><span class="p">();</span>
+<span class="nx">config</span><span class="p">.</span><span class="nx">isValid</span><span class="p">();</span>
+</pre></div>
+
+<p>For more information about schema validation visit <a href="https://github.com/cruks/cruks-lib-config">https://github.com/cruks/cruks-lib-config</a></p>
+
+<h2>
+<a name="yaml-configuration-files" class="anchor" href="#yaml-configuration-files"><span class="octicon octicon-link"></span></a>Yaml configuration files</h2>
+
+<p>You can load yaml files and directories containing yaml files like this:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="nx">config</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">'/path/to/directory'</span><span class="p">);</span>
+<span class="nx">config</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">'/path/to/file.yml'</span><span class="p">);</span>
+<span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="s1">'/path/to/another_file.yml'</span><span class="p">);</span>
+<span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="s1">'/path/to/another/directory'</span><span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>You cann pass options to njet configuration constructor. Like this:</p>
+
+<div class="highlight highlight-JavaScript"><pre><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">njetConfiguration</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+    <span class="nx">varbosity</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nx">expect</span><span class="o">:</span> <span class="nx">expect</span><span class="p">,</span>
+    <span class="nx">loader</span><span class="o">:</span> <span class="nx">loader</span>
+<span class="p">});</span>
+</pre></div>
+
+<ul>
+<li>Verbosity above 0 (default 0) allow njet configuration to print error messages on standard output if configuration validation fails.</li>
+<li>expect is a module to validate configuration. It should have .schema() method that return object with .asset() method. Assert should take configuration json object as first parameter.</li>
+<li>loader is a module for loading data. As first argument, loader take either data object or path to file. By default loader only load .yml files.</li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
