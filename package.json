@@ -1,6 +1,6 @@
 {
   "name": "njet-configuration",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Configuration handler for njet",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,6 @@
   "dependencies": {
     "cruks-lib-config": "~2.0",
     "js-yaml": "~3.0",
-    "node.extend": "^1.0.10"
+    "node.extend": "~1.0"
   }
 }

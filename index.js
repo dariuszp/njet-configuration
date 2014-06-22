@@ -10,6 +10,7 @@ var util        = require('util'),
  * @param options
  * - loader - file loader that implement .load() method
  * - expect - configuration validator
+ * - verbosity - amount of messages printed by std output
  * @returns {Configuration}
  * @constructor
  */
@@ -77,15 +78,26 @@ function Configuration(options) {
         return data;
     };
 
-    this.load = function (path) {
-        config = this.getDataFromPath(path);
+
+    this.load = function (pathOrObject) {
+        if ((typeof pathOrObject) === 'object') {
+            config = pathOrObject;
+        } else {
+            config = this.getDataFromPath(pathOrObject);
+        }
         isValid = false;
         wasValidate = false;
         return this;
     };
 
-    this.merge = function (path, isNotDeep) {
-        var data = this.getDataFromPath(path);
+
+    this.merge = function (pathOrObject, isNotDeep) {
+        var data;
+        if ((typeof pathOrObject) === 'object') {
+            data = pathOrObject;
+        } else {
+            data = this.getDataFromPath(pathOrObject);
+        }
         if (isNotDeep) {
             extend(config, data);
         } else {
@@ -95,6 +107,7 @@ function Configuration(options) {
         wasValidate = false;
         return this;
     };
+
 
     this.schema = function (schemaConfigObject) {
         if ((typeof schemaConfigObject) !== 'object') {
@@ -106,13 +119,16 @@ function Configuration(options) {
         return this;
     };
 
+
     this.clearSchema = function () {
         schema = undefined;
     };
 
+
     this.getSchema = function () {
         return schema;
     };
+
 
     this.setValidators = function (validatorsArray) {
         validators = [];
@@ -122,6 +138,7 @@ function Configuration(options) {
         }
         return this;
     };
+
 
     this.addValidator = function (validator) {
         if ((typeof validator) !== 'function') {
@@ -133,6 +150,7 @@ function Configuration(options) {
         return this;
     };
 
+
     this.clearValidators = function () {
         validators = [];
         isValid = false;
@@ -140,13 +158,14 @@ function Configuration(options) {
         return this;
     };
 
+
     this.validate = function () {
-        var isValid = true;
+        var configIsValid = true;
         if (schema) {
             try {
                 schema.assert(config);
             } catch (e) {
-                isValid = false;
+                configIsValid = false;
                 if (verbosity > 0) {
                     console.error(e.message);
                 }
@@ -158,17 +177,26 @@ function Configuration(options) {
                 if (verbosity > 0) {
                     console.error(validators[i].toString());
                 }
-                isValid = false;
+                configIsValid = false;
                 break;
             }
+        }
+        isValid = configIsValid;
+        wasValidate = true;
+        return configIsValid;
+    };
+
+    this.isValid = function () {
+        if (!wasValidate) {
+            this.validate();
         }
         return isValid;
     };
 }
 
 module.exports = {
-    create: function (rootDir) {
-        return new Configuration(rootDir);
+    create: function (options) {
+        return new Configuration(options);
     },
     Configuration: Configuration
 };

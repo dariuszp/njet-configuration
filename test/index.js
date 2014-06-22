@@ -64,5 +64,23 @@ describe('loader/file', function () {
             config.set('x', 5);
             config.validate().should.be.ok;
         });
+
+        it('should return true', function () {
+            config.merge({
+                last: 'stand'
+            });
+            config.addValidator(function (config) {
+                if (!config) {
+                    return false;
+                }
+                if (!config.last) {
+                    return false;
+                }
+                if (config.last !== 'stand') {
+                    return false;
+                }
+            });
+            config.validate().should.be.ok;
+        });
     });
 });
