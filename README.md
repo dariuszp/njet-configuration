@@ -125,3 +125,30 @@ config.isValid();
 ```
 
 For more information about schema validation visit https://github.com/cruks/cruks-lib-config
+
+## Yaml configuration files
+
+You can load yaml files and directories containing yaml files like this:
+
+```JavaScript
+config.load('/path/to/directory');
+config.load('/path/to/file.yml');
+config.merge('/path/to/another_file.yml');
+config.merge('/path/to/another/directory');
+```
+
+## Configuration
+
+You cann pass options to njet configuration constructor. Like this:
+
+```JavaScript
+var config = njetConfiguration.create({
+    varbosity: 1,
+    expect: expect,
+    loader: loader
+});
+```
+
+* Verbosity above 0 (default 0) allow njet configuration to print error messages on standard output if configuration validation fails.
+* expect is a module to validate configuration. It should have .schema() method that return object with .asset() method. Assert should take configuration json object as first parameter.
+* loader is a module for loading data. As first argument, loader take either data object or path to file. By default loader only load .yml files.
