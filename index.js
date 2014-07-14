@@ -124,7 +124,7 @@ function Configuration(options) {
         if ((typeof schemaConfigObject) !== 'object') {
             throw new Error('Schema expect schema object');
         }
-        return this.expect.schema(schemaConfigObject);
+        return this.expect.schema(schemaConfigObject).schema;
     };
 
 
